@@ -1,20 +1,9 @@
 package models
 
-// type RecordSimcards struct {
-// 	Cliente        string `json:"idCostumer"`
-// 	Numerochip     string `json:"idSimcard"`
-// 	Simcon         string `json:"idSimcon"`
-// 	Numerolinha    string `json:"idLine"`
-// 	Numeroip       string `json:"idIP"`
-// 	DateInstalacao string `json:"idDateinsta"`
-// 	DataAtivacao   string `json:"idDateActi"`
-// 	Fornecedor     string `json:"idSupplier"`
-// 	Slotsimcon     string `json:"idSlot"`
-// 	Plano          string `json:"idPlan"`
-// 	Obs            string `json:"observations"`
-// 	Operadora      string `json:"supplierType"`
-// 	Apn            string `json:"idApn"`
-// }
+type Users struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 type Simcards struct {
 	Id               string  `json:"id"`

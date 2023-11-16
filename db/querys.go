@@ -7,3 +7,7 @@ func RecordSimcardsQuery() string {
 func GetAllSimcardsQuery() string {
 	return "select * from simcards"
 }
+
+func GetUser() {
+	return "SELECT EXISTS(SELECT 1 FROM users WHERE username=? AND password=?)" + user.Username, user.Password + ""
+}
