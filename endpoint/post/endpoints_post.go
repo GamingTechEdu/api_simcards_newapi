@@ -43,6 +43,9 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 	Operator := dados.Operator
 	Plan := dados.Plan
 	Apn := dados.Apn
+	Status := dados.Status
+	Stock := dados.Stock
+	Substituted := dados.Substituted
 	Obs := dados.Obs
 
 	rows, err := db.MysqlDB.Prepare(db.RecordSimcardsQuery())
@@ -64,6 +67,9 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 		Operator,
 		Plan,
 		Apn,
+		Status,
+		Stock,
+		Substituted,
 		Obs,
 	)
 

@@ -33,6 +33,9 @@ func ScanSimcardRow(row *sql.Rows) (models.Simcards, error) {
 		&simcard.Operator,
 		&simcard.Plan,
 		&simcard.Apn,
+		&simcard.Status,
+		&simcard.Stock,
+		&simcard.Substituted,
 		&simcard.Obs,
 	)
 	return simcard, err

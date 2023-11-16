@@ -30,5 +30,8 @@ type Simcards struct {
 	Operator         string  `json:"operator"`
 	Plan             string  `json:"plan"`
 	Apn              string  `json:"apn"`
+	Status           *string `json:"status"`
+	Stock            *string `json:"stock"`
+	Substituted      *string `json:"substitued"`
 	Obs              *string `json:"obs"`
 }

@@ -21,7 +21,7 @@ func simcard() *models.Simcards {
 		Operator:         "OperatorA",
 		Plan:             "PlanA",
 		Apn:              "apn.example.com",
-		Obs:              "Observation",
+		Obs:              nil,
 	}
 
 	return &simcard
@@ -67,7 +67,7 @@ func TestSimcardsEmptyFields(t *testing.T) {
 		Operator:         "",
 		Plan:             "",
 		Apn:              "",
-		Obs:              "Observation",
+		Obs:              nil,
 	}
 
 	// Validar campos antes da serialização
