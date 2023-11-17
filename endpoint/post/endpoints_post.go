@@ -79,3 +79,33 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "Dados gravados com sucesso!")
 }
+
+func PostUser(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var userCreds models.Users
+	err := json.NewDecoder(r.Body).Decode(&userCreds)
+	if err != nil {
+		http.Error(w, "Erro ao decodificar o JSON da requisição", http.StatusBadRequest)
+		return
+	}
+
+	row := db.MysqlDB.QueryRow(db.PostUserQuery(), userCreds.Username, userCreds.Password)
+
+	var user struct {
+		Username string
+		Password string
+	}
+
+	err = row.Scan(&user.Username, &user.Password)
+
+	if err == nil && user.Password == userCreds.Password {
+		w.Write([]byte("Credenciais válidas"))
+	} else {
+		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
+		log.Println("Erro ao verificar credenciais:", err)
+	}
+}

@@ -8,6 +8,6 @@ func GetAllSimcardsQuery() string {
 	return "select * from simcards"
 }
 
-func GetUser() {
-	return "SELECT EXISTS(SELECT 1 FROM users WHERE username=? AND password=?)" + user.Username, user.Password + ""
+func PostUserQuery() string {
+	return "SELECT username, password FROM users WHERE username = ? and password = ?"
 }
