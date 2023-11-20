@@ -95,19 +95,12 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 
 	row := db.MysqlDB.QueryRow(db.PostUserQuery(), userCreds.Username, userCreds.Password)
 
-	var user struct {
-		Username  string
-		Password  string
-		hierarchy string
-	}
+	err = row.Scan(&models.SendUser.Username, &models.SendUser.Password, &models.SendUser.Hierarchy)
 
-	err = row.Scan(&user.Username, &user.Password, &user.hierarchy)
-
-	if err == nil && user.Password == userCreds.Password {
+	if err == nil && models.SendUser.Password == userCreds.Password {
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		response := fmt.Sprintf("Username: %s, Password: %s, Hierarchy: %s", user.Username, user.Password, user.hierarchy)
-		w.Write([]byte(response))
-		// w.Write([]byte("Credenciais válidas"))
+		json.NewEncoder(w).Encode(models.SendUser)
 	} else {
 		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
 		log.Println("Erro ao verificar credenciais:", err)

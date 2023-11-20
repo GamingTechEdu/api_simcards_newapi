@@ -25,3 +25,9 @@ type Simcards struct {
 	Substituted      *string `json:"substitued"`
 	Obs              *string `json:"obs"`
 }
+
+var SendUser struct {
+	Username  string
+	Password  string
+	Hierarchy string
+}
