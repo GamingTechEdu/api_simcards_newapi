@@ -9,5 +9,5 @@ func GetAllSimcardsQuery() string {
 }
 
 func PostUserQuery() string {
-	return "SELECT username, password FROM users WHERE username = ? and password = ?"
+	return "SELECT username, password, hierarchy FROM users WHERE username = ? and password = ?"
 }

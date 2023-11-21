@@ -1,8 +1,9 @@
 package models
 
 type Users struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username  string `json:"username"`
+	Password  string `json:"password"`
+	Hierarchy string `json:"hierarchy"`
 }
 
 type Simcards struct {
@@ -23,4 +24,10 @@ type Simcards struct {
 	Stock            *string `json:"stock"`
 	Substituted      *string `json:"substitued"`
 	Obs              *string `json:"obs"`
+}
+
+var SendUser struct {
+	Username  string
+	Password  string
+	Hierarchy string
 }
