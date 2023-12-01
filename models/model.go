@@ -23,11 +23,13 @@ type Simcards struct {
 	Status           *string `json:"status"`
 	Stock            *string `json:"stock"`
 	Substituted      *string `json:"substitued"`
+	Nfsimcon         *string `json:"nfsimcon"`
+	Deliverydate     *string `json:"deliverydate"`
 	Obs              *string `json:"obs"`
 }
 
 var SendUser struct {
 	Username  string
 	Password  string
-	Hierarchy string
+	Hierarchy string `json:"hierarchy"`
 }

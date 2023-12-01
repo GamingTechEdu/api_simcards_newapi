@@ -23,6 +23,7 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 	simcards := []models.Simcards{}
 	for rows.Next() {
 		simcard, err := utils.ScanSimcardRow(rows)
+
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -36,31 +37,3 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(simcards)
 }
-
-// func ScanSimcardRow(row *sql.Rows) (models.Simcards, error) {
-// 	var simcard models.Simcards
-// 	var err error
-
-// 	// Assuming Simcards model has fields Field1, Field2, ..., FieldN
-// 	var Obs sql.NullString
-// 	// ...
-// 	// var fieldN sql.NullString
-
-// 	err = row.Scan(&Obs)
-// 	if err != nil {
-// 		return simcard, err
-// 	}
-
-// 	simcard.Obs = convertNullString(Obs)
-// 	// ...
-// 	// simcard.FieldN = convertNullString(fieldN)
-
-// 	return simcard, nil
-// }
-
-// func convertNullString(nullString sql.NullString) string {
-// 	if nullString.Valid {
-// 		return nullString.String
-// 	}
-// 	return ""
-// }
