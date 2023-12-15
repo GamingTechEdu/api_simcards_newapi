@@ -20,5 +20,5 @@ func main() {
 	routesGet.SetGetRoutes(router)
 	routesPost.SetPostRoutes(router)
 
-	log.Fatal(http.ListenAndServe(":8080", headers.AddCorsHeaders(router)))
+	log.Fatal(http.ListenAndServe(":60060", headers.AddCorsHeaders(router)))
 }
