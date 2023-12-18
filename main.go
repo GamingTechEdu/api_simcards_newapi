@@ -9,6 +9,7 @@ import (
 
 	"kdl_api_rest_internal/db"
 	"kdl_api_rest_internal/headers"
+	routesDelete "kdl_api_rest_internal/routes/routes_delete"
 	routesGet "kdl_api_rest_internal/routes/routes_get"
 	routesPost "kdl_api_rest_internal/routes/routes_post"
 )
@@ -19,6 +20,7 @@ func main() {
 
 	routesGet.SetGetRoutes(router)
 	routesPost.SetPostRoutes(router)
+	routesDelete.SetDeleteRoutes(router)
 
 	log.Fatal(http.ListenAndServe(":8080", headers.AddCorsHeaders(router)))
 }

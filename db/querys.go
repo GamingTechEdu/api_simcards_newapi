@@ -1,7 +1,7 @@
 package db
 
 func RecordSimcardsQuery() string {
-	return "Insert into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 }
 
 func GetAllSimcardsQuery() string {
@@ -10,4 +10,8 @@ func GetAllSimcardsQuery() string {
 
 func PostUserQuery() string {
 	return "SELECT username, password, hierarchy FROM users WHERE username = ? and password = ?"
+}
+
+func DeleteSimcardQuery() string {
+	return "DELETE FROM simcards WHERE id = ?"
 }
