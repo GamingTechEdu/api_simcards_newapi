@@ -1,7 +1,7 @@
 package models
 
 type IDRequest struct {
-	ID string `json:"id"`
+	ID []string `json:"id"`
 }
 
 type Users struct {
