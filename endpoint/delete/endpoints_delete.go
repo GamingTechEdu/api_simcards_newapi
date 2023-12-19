@@ -1,9 +1,11 @@
 package get
 
 import (
+	// "encoding/json"
 	"encoding/json"
 	"fmt"
 	"kdl_api_rest_internal/db"
+
 	"kdl_api_rest_internal/models"
 	"net/http"
 
@@ -11,34 +13,35 @@ import (
 )
 
 func DeleteSimcards(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "DELETE" {
-		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		return
-	}
+	// if r.Method != http.MethodDelete {
+	// 	http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+	// 	return
+	// }
 
-	// Decodificar o corpo da requisição em uma struct IDRequest
 	var req models.IDRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Erro ao decodificar o corpo da requisição", http.StatusBadRequest)
 		return
 	}
 
-	// Executar a query de delete no banco de dados
-	stmt, err := db.MysqlDB.Prepare(db.DeleteSimcardQuery())
+	stmt, err := db.MysqlDB.Prepare(db.DeleteSimcardQuery(req.ID))
 	if err != nil {
 		http.Error(w, "Erro ao preparar a consulta de exclusão", http.StatusInternalServerError)
 		return
 	}
 	defer stmt.Close()
 
-	result, err := stmt.Exec(req.ID)
+	var args []interface{}
+	for _, id := range req.ID {
+		args = append(args, id)
+	}
+
+	result, err := stmt.Exec(args...)
 	if err != nil {
 		http.Error(w, "Erro ao executar a consulta de exclusão", http.StatusInternalServerError)
 		return
 	}
 
-	// Verificar se alguma linha foi afetada pela exclusão
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		http.Error(w, "Erro ao obter o número de linhas afetadas", http.StatusInternalServerError)
@@ -50,7 +53,6 @@ func DeleteSimcards(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Responder com uma mensagem de sucesso
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "Item excluído com sucesso")
+	fmt.Fprint(w, "Item(s) excluído(s) com sucesso")
 }

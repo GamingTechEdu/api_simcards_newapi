@@ -12,6 +12,15 @@ func PostUserQuery() string {
 	return "SELECT username, password, hierarchy FROM users WHERE username = ? and password = ?"
 }
 
-func DeleteSimcardQuery() string {
-	return "DELETE FROM simcards WHERE id = ?"
+func DeleteSimcardQuery(ids []string) string {
+	query := "DELETE FROM simcards WHERE id IN ("
+
+	for i := range ids {
+		query += "?"
+		if i < len(ids)-1 {
+			query += ", "
+		}
+	}
+	query += ")"
+	return query
 }
