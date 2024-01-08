@@ -46,6 +46,8 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 	Status := dados.Status
 	Stock := dados.Stock
 	Substituted := dados.Substituted
+	NfSimcon := dados.Nfsimcon
+	Deliverydate := dados.Deliverydate
 	Obs := dados.Obs
 
 	rows, err := db.MysqlDB.Prepare(db.RecordSimcardsQuery())
@@ -70,6 +72,58 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 		Status,
 		Stock,
 		Substituted,
+		NfSimcon,
+		Deliverydate,
+		Obs,
+	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Fprintf(w, "Dados gravados com sucesso!")
+}
+
+func RecordStock(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Erro ao ler o corpo da solicitação", http.StatusInternalServerError)
+		return
+	}
+
+	var dados models.Simcards
+	err = json.Unmarshal(body, &dados)
+	if err != nil {
+		http.Error(w, "Erro ao decodificar o corpo da solicitação", http.StatusBadRequest)
+		return
+	}
+
+	Iccid := dados.Iccid
+	Supplier := dados.Supplier
+	Operator := dados.Operator
+	Plan := dados.Plan
+	Apn := dados.Apn
+	Status := dados.Status
+	Obs := dados.Obs
+
+	rows, err := db.MysqlDB.Prepare(db.RecordStockQuery())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	_, err = rows.Exec(
+		Iccid,
+		Supplier,
+		Operator,
+		Plan,
+		Apn,
+		Status,
 		Obs,
 	)
 

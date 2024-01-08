@@ -37,3 +37,39 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(simcards)
 }
+
+func GetAllStock(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	rows, err := db.MysqlDB.Query(db.GetAllStock())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	simcards := []models.Simcardstock{}
+	for rows.Next() {
+		var simcard models.Simcardstock
+		err := rows.Scan(
+			&simcard.Id,
+			&simcard.Iccid,
+			&simcard.Supplier,
+			&simcard.Operator,
+			&simcard.Plan,
+			&simcard.Apn,
+			&simcard.Status,
+			&simcard.Obs,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+		simcards = append(simcards, simcard)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(simcards)
+}

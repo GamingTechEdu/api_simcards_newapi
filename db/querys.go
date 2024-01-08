@@ -1,11 +1,19 @@
 package db
 
 func RecordSimcardsQuery() string {
-	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+}
+
+func RecordStockQuery() string {
+	return "INSERT into simcardstock (iccid, supplier, operator, plan, apn, status, obs) Values(?, ?, ?, ?, ?, ?, ?)"
 }
 
 func GetAllSimcardsQuery() string {
 	return "select * from simcards"
+}
+
+func GetAllStock() string {
+	return "select * from simcardstock"
 }
 
 func PostUserQuery() string {
