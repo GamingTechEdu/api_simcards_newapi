@@ -50,13 +50,29 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 	Deliverydate := dados.Deliverydate
 	Obs := dados.Obs
 
-	rows, err := db.MysqlDB.Prepare(db.RecordSimcardsQuery())
+	// Iniciar uma transação
+	tx, err := db.MysqlDB.Begin()
 	if err != nil {
+		http.Error(w, "Erro ao iniciar a transação", http.StatusInternalServerError)
+		return
+	}
+	defer func() {
+		if err := recover(); err != nil {
+			// Em caso de pânico, fazer rollback da transação
+			tx.Rollback()
+			http.Error(w, "Erro interno no servidor", http.StatusInternalServerError)
+		}
+	}()
+
+	// Inserir dados na tabela principal
+	rows, err := tx.Prepare(db.RecordSimcardsQuery())
+	if err != nil {
+		tx.Rollback()
 		log.Fatal(err)
 	}
 	defer rows.Close()
 
-	_, err = rows.Exec(
+	result, err := rows.Exec(
 		Client,
 		Iccid,
 		Simcon,
@@ -76,8 +92,41 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 		Deliverydate,
 		Obs,
 	)
+	if err != nil {
+		tx.Rollback()
+		log.Fatal(err)
+	}
+
+	// Obter o ID do simcard recém-inserido
+	simcardID, err := result.LastInsertId()
+	if err != nil {
+		tx.Rollback()
+		log.Fatal(err)
+	}
+
+	// Inserir dados de log em outra tabela
+	logsRows, err := tx.Prepare(db.RecordLogQuery())
+	if err != nil {
+		tx.Rollback()
+		log.Fatal(err)
+	}
+	defer logsRows.Close()
+
+	_, err = logsRows.Exec(
+		simcardID,
+		"Simcard Cadastrado",
+		"Detalhes opcionais",
+	)
 
 	if err != nil {
+		tx.Rollback()
+		log.Fatal(err)
+	}
+
+	// Commit da transação se tudo estiver bem
+	err = tx.Commit()
+	if err != nil {
+		tx.Rollback()
 		log.Fatal(err)
 	}
 

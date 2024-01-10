@@ -1,5 +1,9 @@
 package db
 
+func RecordLogQuery() string {
+	return "INSERT INTO simcard_logs (simcard_id, action, timestamp, details) VALUES (?, ?, NOW(), ?);"
+}
+
 func RecordSimcardsQuery() string {
 	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 }
