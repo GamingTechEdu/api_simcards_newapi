@@ -4,6 +4,10 @@ type IDRequest struct {
 	ID []string `json:"id"`
 }
 
+type ICCIDRequest struct {
+	Iccid string `json:"iccid"`
+}
+
 type Users struct {
 	Username  string `json:"username"`
 	Password  string `json:"password"`

@@ -5,8 +5,14 @@ func RecordLogQuery() string {
 }
 
 func RecordSimcardsQuery() string {
-	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 }
+
+// DELETE FROM simcards WHERE iccid = ?
+
+// func RecordSimcardsQuery() string {
+// 	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+// }
 
 func RecordStockQuery() string {
 	return "INSERT into simcardstock (iccid, supplier, operator, plan, apn, status, obs) Values(?, ?, ?, ?, ?, ?, ?)"
@@ -35,4 +41,8 @@ func DeleteSimcardQuery(ids []string) string {
 	}
 	query += ")"
 	return query
+}
+
+func DeleteSimcardStockQuery(iccid string) string {
+	return "DELETE FROM simcardstock WHERE iccid = ?"
 }
