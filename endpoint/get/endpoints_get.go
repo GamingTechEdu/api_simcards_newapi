@@ -41,7 +41,7 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 func GetAllStock(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rows, err := db.MysqlDB.Query(db.GetAllStock())
+	rows, err := db.MysqlDB.Query(db.GetAllStockQuery())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,4 +72,37 @@ func GetAllStock(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(simcards)
+}
+
+func GetAllLogs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	rows, err := db.MysqlDB.Query(db.GetAllLogsQuery())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	timelines := []models.GetLogs{}
+	for rows.Next() {
+		var timeline models.GetLogs
+		err := rows.Scan(
+			&timeline.Logid,
+			&timeline.SimcardId,
+			&timeline.Action,
+			&timeline.Timestamp,
+			&timeline.Details,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+		timelines = append(timelines, timeline)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(timelines)
 }

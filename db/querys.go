@@ -22,8 +22,12 @@ func GetAllSimcardsQuery() string {
 	return "select * from simcards"
 }
 
-func GetAllStock() string {
+func GetAllStockQuery() string {
 	return "select * from simcardstock"
+}
+
+func GetAllLogsQuery() string {
+	return "select * from simcard_logs"
 }
 
 func PostUserQuery() string {
