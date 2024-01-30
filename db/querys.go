@@ -30,6 +30,10 @@ func GetAllLogsQuery() string {
 	return "select * from simcard_logs"
 }
 
+func GetListIccidsQuery() string {
+	return "select iccid from simcards"
+}
+
 func PostUserQuery() string {
 	return "SELECT username, password, hierarchy FROM users WHERE username = ? and password = ?"
 }

@@ -106,3 +106,32 @@ func GetAllLogs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(timelines)
 }
+
+func GetListIccids(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	rows, err := db.MysqlDB.Query(db.GetListIccidsQuery())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	listIccids := []models.GetListIccid{}
+	for rows.Next() {
+		var listIccid models.GetListIccid
+		err := rows.Scan(
+			&listIccid.Iccid,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+		listIccids = append(listIccids, listIccid)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(listIccids)
+}
