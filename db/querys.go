@@ -8,6 +8,10 @@ func RecordSimcardsQuery() string {
 	return "INSERT into simcards (client, iccid, simcon, msisdn, ip, slot, installationdate, activationdate, supplier, operator, plan, apn, status, stock, substituted, nfsimcon, deliverydate, obs) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 }
 
+func updateSimcardQuery() string {
+	return ""
+}
+
 // DELETE FROM simcards WHERE iccid = ?
 
 // func RecordSimcardsQuery() string {
