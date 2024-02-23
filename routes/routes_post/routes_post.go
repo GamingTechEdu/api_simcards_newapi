@@ -7,6 +7,7 @@ import (
 )
 
 func SetPostRoutes(router *mux.Router) {
+	router.HandleFunc("/updateSimcard2", post.UpdateSimcard2).Methods("POST")
 	router.HandleFunc("/updateSimcard", post.UpdateSimcard).Methods("POST")
 	router.HandleFunc("/recordSimcard", post.RecordSimcard).Methods("POST")
 	router.HandleFunc("/recordStock", post.RecordStock).Methods("POST")

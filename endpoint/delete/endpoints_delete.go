@@ -13,11 +13,6 @@ import (
 )
 
 func DeleteSimcards(w http.ResponseWriter, r *http.Request) {
-	// if r.Method != http.MethodDelete {
-	// 	http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-	// 	return
-	// }
-
 	var req models.IDRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Erro ao decodificar o corpo da requisição", http.StatusBadRequest)
