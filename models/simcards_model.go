@@ -20,4 +20,5 @@ type Simcards struct {
 	Nfsimcon         *string `json:"nfsimcon"`
 	Deliverydate     *string `json:"deliverydate"`
 	Obs              *string `json:"obs"`
+	UpdateDetails    *string `json:"updatedetails"`
 }
