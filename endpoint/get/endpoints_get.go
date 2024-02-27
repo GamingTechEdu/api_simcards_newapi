@@ -34,7 +34,7 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(simcards)
 }
 
@@ -70,7 +70,7 @@ func GetAllStock(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(simcards)
 }
 
@@ -103,7 +103,7 @@ func GetAllLogs(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(timelines)
 }
 
@@ -132,6 +132,6 @@ func GetListIccids(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(listIccids)
 }
