@@ -9,4 +9,5 @@ import (
 func SetDeleteRoutes(router *mux.Router) {
 	router.HandleFunc("/delete", delete.DeleteSimcards).Methods("DELETE")
 	router.HandleFunc("/deleteStock", delete.DeleteSimcardsStock).Methods("DELETE")
+	router.HandleFunc("/deleteStockForinclude", delete.DeleteSimcardsStockForInclude).Methods("DELETE")
 }

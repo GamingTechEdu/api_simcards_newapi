@@ -62,3 +62,16 @@ func DeleteSimcardQuery(ids []string) string {
 func DeleteSimcardStockQuery(iccid string) string {
 	return "DELETE FROM simcardstock WHERE iccid = ?"
 }
+
+func DeleteSimcardStockForIncludeQuery(ids []string) string {
+	query := "DELETE FROM simcardstock WHERE id IN ("
+
+	for i := range ids {
+		query += "?"
+		if i < len(ids)-1 {
+			query += ", "
+		}
+	}
+	query += ")"
+	return query
+}
