@@ -37,3 +37,30 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(simcards)
 }
+
+func GetAllSimucs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	rows, err := db.MysqlDB.Query(db.GetAllSimucsQuery())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	simucs := []models.Simucs{}
+	for rows.Next() {
+		simuc, err := utils.ScanSimucsRow(rows)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		simucs = append(simucs, simuc)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(simucs)
+}

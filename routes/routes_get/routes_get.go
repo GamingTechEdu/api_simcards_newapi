@@ -8,4 +8,5 @@ import (
 
 func SetGetRoutes(router *mux.Router) {
 	router.HandleFunc("/simcards", get.GetAllSimcards).Methods("GET")
+	router.HandleFunc("/simucs", get.GetAllSimucs).Methods("GET")
 }

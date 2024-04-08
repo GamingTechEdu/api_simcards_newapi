@@ -8,6 +8,10 @@ func GetAllSimcardsQuery() string {
 	return "select * from simcards"
 }
 
+func GetAllSimucsQuery() string {
+	return "select * from simucs"
+}
+
 func PostUserQuery() string {
 	return "SELECT username, password, hierarchy FROM users WHERE username = ? and password = ?"
 }
