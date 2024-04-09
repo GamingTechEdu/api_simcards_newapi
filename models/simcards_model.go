@@ -1,15 +1,5 @@
 package models
 
-type IDRequest struct {
-	ID []string `json:"id"`
-}
-
-type Users struct {
-	Username  string `json:"username"`
-	Password  string `json:"password"`
-	Hierarchy string `json:"hierarchy"`
-}
-
 type Simcards struct {
 	Id               string  `json:"id"`
 	Client           string  `json:"client"`
@@ -30,6 +20,7 @@ type Simcards struct {
 	Nfsimcon         *string `json:"nfsimcon"`
 	Deliverydate     *string `json:"deliverydate"`
 	Obs              *string `json:"obs"`
+<<<<<<< HEAD:models/model.go
 }
 
 type Simucs struct {
@@ -57,4 +48,7 @@ var SendUser struct {
 	Username  string
 	Password  string
 	Hierarchy string `json:"hierarchy"`
+=======
+	UpdateDetails    *string `json:"updatedetails"`
+>>>>>>> c122bb3b4c87e543ccda90ca11c6360bc5c80e01:models/simcards_model.go
 }

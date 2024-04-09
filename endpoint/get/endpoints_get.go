@@ -34,33 +34,42 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(simcards)
 }
 
-func GetAllSimucs(w http.ResponseWriter, r *http.Request) {
+func GetAllStock(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rows, err := db.MysqlDB.Query(db.GetAllSimucsQuery())
+	rows, err := db.MysqlDB.Query(db.GetAllStockQuery())
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 
-	simucs := []models.Simucs{}
+	simcards := []models.Simcardstock{}
 	for rows.Next() {
-		simuc, err := utils.ScanSimucsRow(rows)
-
+		var simcard models.Simcardstock
+		err := rows.Scan(
+			&simcard.Id,
+			&simcard.Iccid,
+			&simcard.Supplier,
+			&simcard.Operator,
+			&simcard.Plan,
+			&simcard.Apn,
+			&simcard.Status,
+			&simcard.Obs,
+		)
 		if err != nil {
 			log.Fatal(err)
 		}
-		simucs = append(simucs, simuc)
+		simcards = append(simcards, simcard)
 	}
 
 	if err := rows.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(simucs)
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	json.NewEncoder(w).Encode(simcards)
 }
