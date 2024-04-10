@@ -1,6 +1,6 @@
 package models
 
-var SendUser struct {
+type SendUser struct {
 	Username  string
 	Password  string
 	Hierarchy string `json:"hierarchy"`
