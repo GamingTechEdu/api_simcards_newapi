@@ -32,16 +32,8 @@ func GetAllSimcardsQuery() string {
 	return "select * from simcards"
 }
 
-func GetAllStockQuery() string {
-	return "select * from simcardstock"
-}
-
-func GetAllLogsQuery() string {
-	return "select * from simcard_logs"
-}
-
-func GetListIccidsQuery() string {
-	return "select iccid from simcards"
+func GetAllSimucsQuery() string {
+	return "select * from simucs"
 }
 
 // func GetListSimucsQuery() string {

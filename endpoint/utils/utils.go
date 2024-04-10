@@ -44,6 +44,7 @@ func ScanSimcardRow(row *sql.Rows) (models.Simcards, error) {
 	return simcard, err
 }
 
+<<<<<<< HEAD
 // func ScanSimucRow(row *sql.Rows) (models.GetListSimuc, error) {
 // 	var simcard models.GetListSimuc
 // 	err := row.Scan(
@@ -93,4 +94,39 @@ func ScanSimucRow(row *sql.Row, simcard *models.GetListSimuc) error {
 	)
 
 	return err
+=======
+func DeserializeSimucs(data []byte) ([]models.Simucs, error) {
+	var simucs []models.Simucs
+	err := json.Unmarshal(data, &simucs)
+	if err != nil {
+		return nil, err
+	}
+	return simucs, nil
+}
+
+func ScanSimucsRow(row *sql.Rows) (models.Simucs, error) {
+	var simuc models.Simucs
+	err := row.Scan(
+		&simuc.Id,
+		&simuc.Nserlum,
+		&simuc.Doc,
+		&simuc.NumberDoc,
+		&simuc.DateDoc,
+		&simuc.User,
+		&simuc.Violation,
+		&simuc.Obs,
+		&simuc.EvaluatorDate,
+		&simuc.DefectRelated,
+		&simuc.ApparentDefect,
+		&simuc.Defect,
+		&simuc.Evaluator,
+		&simuc.Components,
+		&simuc.Value,
+		&simuc.Garantee,
+		&simuc.Nivel,
+		&simuc.Exist,
+	)
+
+	return simuc, err
+>>>>>>> 05e0cc803d9052df065ccf8518e5f9d9d4386821
 }

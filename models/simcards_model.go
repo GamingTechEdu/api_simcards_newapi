@@ -20,5 +20,31 @@ type Simcards struct {
 	Nfsimcon         *string `json:"nfsimcon"`
 	Deliverydate     *string `json:"deliverydate"`
 	Obs              *string `json:"obs"`
-	UpdateDetails    *string `json:"updatedetails"`
+}
+
+type Simucs struct {
+	Id             *string `json:"id"`
+	Nserlum        *string `json:"nserlum"`
+	Doc            *string `json:"doc"`
+	NumberDoc      *string `json:"numberDoc"`
+	DateDoc        *string `json:"dateDoc"`
+	User           *string `json:"user"`
+	Violation      *string `json:"violation"`
+	Obs            *string `json:"obs"`
+	EvaluatorDate  *string `json:"evaluatorDate"`
+	DefectRelated  *string `json:"defectRelated"`
+	ApparentDefect *string `json:"apparentDefect"`
+	Defect         *string `json:"defect"`
+	Evaluator      *string `json:"evaluator"`
+	Components     *string `json:"components"`
+	Value          *string `json:"value"`
+	Garantee       *string `json:"garantee"`
+	Nivel          *string `json:"nivel"`
+	Exist          *string `json:"exist"`
+}
+
+var SendUser struct {
+	Username  string
+	Password  string
+	Hierarchy string `json:"hierarchy"`
 }
