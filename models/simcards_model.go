@@ -42,9 +42,3 @@ type Simucs struct {
 	Nivel          *string `json:"nivel"`
 	Exist          *string `json:"exist"`
 }
-
-var SendUser struct {
-	Username  string
-	Password  string
-	Hierarchy string `json:"hierarchy"`
-}

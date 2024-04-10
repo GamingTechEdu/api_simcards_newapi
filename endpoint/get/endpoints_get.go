@@ -42,103 +42,103 @@ func GetAllSimcards(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(simcards)
 }
 
-func GetAllStock(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+// func GetAllStock(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rows, err := db.MysqlDB.Query(db.GetAllStockQuery())
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+// 	rows, err := db.MysqlDB.Query(db.GetAllStockQuery())
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer rows.Close()
 
-	simcards := []models.Simcardstock{}
-	for rows.Next() {
-		var simcard models.Simcardstock
-		err := rows.Scan(
-			&simcard.Id,
-			&simcard.Iccid,
-			&simcard.Supplier,
-			&simcard.Operator,
-			&simcard.Plan,
-			&simcard.Apn,
-			&simcard.Status,
-			&simcard.Obs,
-		)
-		if err != nil {
-			log.Fatal(err)
-		}
-		simcards = append(simcards, simcard)
-	}
+// 	simcards := []models.Simcardstock{}
+// 	for rows.Next() {
+// 		var simcard models.Simcardstock
+// 		err := rows.Scan(
+// 			&simcard.Id,
+// 			&simcard.Iccid,
+// 			&simcard.Supplier,
+// 			&simcard.Operator,
+// 			&simcard.Plan,
+// 			&simcard.Apn,
+// 			&simcard.Status,
+// 			&simcard.Obs,
+// 		)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		simcards = append(simcards, simcard)
+// 	}
 
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
+// 	if err := rows.Err(); err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(simcards)
-}
+// 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+// 	json.NewEncoder(w).Encode(simcards)
+// }
 
-func GetAllLogs(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+// func GetAllLogs(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rows, err := db.MysqlDB.Query(db.GetAllLogsQuery())
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+// 	rows, err := db.MysqlDB.Query(db.GetAllLogsQuery())
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer rows.Close()
 
-	timelines := []models.GetLogs{}
-	for rows.Next() {
-		var timeline models.GetLogs
-		err := rows.Scan(
-			&timeline.Logid,
-			&timeline.SimcardId,
-			&timeline.Action,
-			&timeline.Timestamp,
-			&timeline.Details,
-		)
-		if err != nil {
-			log.Fatal(err)
-		}
-		timelines = append(timelines, timeline)
-	}
+// 	timelines := []models.GetLogs{}
+// 	for rows.Next() {
+// 		var timeline models.GetLogs
+// 		err := rows.Scan(
+// 			&timeline.Logid,
+// 			&timeline.SimcardId,
+// 			&timeline.Action,
+// 			&timeline.Timestamp,
+// 			&timeline.Details,
+// 		)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		timelines = append(timelines, timeline)
+// 	}
 
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
+// 	if err := rows.Err(); err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(timelines)
-}
+// 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+// 	json.NewEncoder(w).Encode(timelines)
+// }
 
-func GetListIccids(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+// func GetListIccids(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rows, err := db.MysqlDB.Query(db.GetListIccidsQuery())
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+// 	rows, err := db.MysqlDB.Query(db.GetListIccidsQuery())
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer rows.Close()
 
-	listIccids := []models.GetListIccid{}
-	for rows.Next() {
-		var listIccid models.GetListIccid
-		err := rows.Scan(
-			&listIccid.Iccid,
-		)
-		if err != nil {
-			log.Fatal(err)
-		}
-		listIccids = append(listIccids, listIccid)
-	}
+// 	listIccids := []models.GetListIccid{}
+// 	for rows.Next() {
+// 		var listIccid models.GetListIccid
+// 		err := rows.Scan(
+// 			&listIccid.Iccid,
+// 		)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		listIccids = append(listIccids, listIccid)
+// 	}
 
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
+// 	if err := rows.Err(); err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(listIccids)
-}
+// 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+// 	json.NewEncoder(w).Encode(listIccids)
+// }
 
 // func GetListSimucs(w http.ResponseWriter, r *http.Request) {
 // 	w.Header().Set("Access-Control-Allow-Origin", "*")

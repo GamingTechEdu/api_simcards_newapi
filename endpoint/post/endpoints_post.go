@@ -177,114 +177,114 @@ func RecordStock(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Dados gravados com sucesso!")
 }
 
-func PostUser(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		return
-	}
+// func PostUser(w http.ResponseWriter, r *http.Request) {
+// 	if r.Method != "POST" {
+// 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+// 		return
+// 	}
 
-	var userCreds models.Users
-	err := json.NewDecoder(r.Body).Decode(&userCreds)
-	if err != nil {
-		http.Error(w, "Erro ao decodificar o JSON da requisição", http.StatusBadRequest)
-		return
-	}
+// 	var userCreds models.Users
+// 	err := json.NewDecoder(r.Body).Decode(&userCreds)
+// 	if err != nil {
+// 		http.Error(w, "Erro ao decodificar o JSON da requisição", http.StatusBadRequest)
+// 		return
+// 	}
 
-	row := db.MysqlDB.QueryRow(db.PostUserQuery(), userCreds.Username, userCreds.Password)
+// 	row := db.MysqlDB.QueryRow(db.PostUserQuery(), userCreds.Username, userCreds.Password)
 
-	err = row.Scan(&models.SendUser.Username, &models.SendUser.Password, &models.SendUser.Hierarchy)
+// 	err = row.Scan(&models.SendUser.Username, &models.SendUser.Password, &models.SendUser.Hierarchy)
 
-	if err == nil && models.SendUser.Password == userCreds.Password {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(models.SendUser)
-	} else {
-		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
-		log.Println("Erro ao verificar credenciais:", err)
-	}
-}
+// 	if err == nil && models.SendUser.Password == userCreds.Password {
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusOK)
+// 		json.NewEncoder(w).Encode(models.SendUser)
+// 	} else {
+// 		http.Error(w, "Credenciais inválidas", http.StatusUnauthorized)
+// 		log.Println("Erro ao verificar credenciais:", err)
+// 	}
+// }
 
-func UpdateSimcard(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		return
-	}
+// func UpdateSimcard(w http.ResponseWriter, r *http.Request) {
+// 	if r.Method != "POST" {
+// 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+// 		return
+// 	}
 
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "Erro ao ler o corpo da solicitação", http.StatusInternalServerError)
-		return
-	}
+// 	body, err := io.ReadAll(r.Body)
+// 	if err != nil {
+// 		http.Error(w, "Erro ao ler o corpo da solicitação", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	var dados models.Simcards
-	err = json.Unmarshal(body, &dados)
-	if err != nil {
-		http.Error(w, "Erro ao decodificar o corpo da solicitação", http.StatusBadRequest)
-		return
-	}
+// 	var dados models.Simcards
+// 	err = json.Unmarshal(body, &dados)
+// 	if err != nil {
+// 		http.Error(w, "Erro ao decodificar o corpo da solicitação", http.StatusBadRequest)
+// 		return
+// 	}
 
-	tx, err := db.MysqlDB.Begin()
-	if err != nil {
-		http.Error(w, "Erro ao iniciar a transação", http.StatusInternalServerError)
-		return
-	}
+// 	tx, err := db.MysqlDB.Begin()
+// 	if err != nil {
+// 		http.Error(w, "Erro ao iniciar a transação", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	defer func() {
-		if err := recover(); err != nil {
-			tx.Rollback()
-			http.Error(w, "Erro interno no servidor", http.StatusInternalServerError)
-		}
-	}()
+// 	defer func() {
+// 		if err := recover(); err != nil {
+// 			tx.Rollback()
+// 			http.Error(w, "Erro interno no servidor", http.StatusInternalServerError)
+// 		}
+// 	}()
 
-	// Preparando a instrução UPDATE
-	stmt, err := tx.Prepare(`UPDATE simcards SET 
-        Client=?, Iccid=?, Simcon=?, Msisdn=?, Ip=?, Slot=?, Installationdate=?, 
-        Activationdate=?, Supplier=?, Operator=?, Plan=?, Apn=?, Status=?, Stock=?, 
-        Substituted=?, NfSimcon=?, Deliverydate=?, Obs=? WHERE id=?`)
-	if err != nil {
-		tx.Rollback()
-		http.Error(w, "Erro ao preparar a instrução SQL", http.StatusInternalServerError)
-		return
-	}
-	defer stmt.Close()
+// 	// Preparando a instrução UPDATE
+// 	stmt, err := tx.Prepare(`UPDATE simcards SET
+//         Client=?, Iccid=?, Simcon=?, Msisdn=?, Ip=?, Slot=?, Installationdate=?,
+//         Activationdate=?, Supplier=?, Operator=?, Plan=?, Apn=?, Status=?, Stock=?,
+//         Substituted=?, NfSimcon=?, Deliverydate=?, Obs=? WHERE id=?`)
+// 	if err != nil {
+// 		tx.Rollback()
+// 		http.Error(w, "Erro ao preparar a instrução SQL", http.StatusInternalServerError)
+// 		return
+// 	}
+// 	defer stmt.Close()
 
-	_, err = stmt.Exec(
-		dados.Client, dados.Iccid, dados.Simcon, dados.Msisdn, dados.Ip, dados.Slot,
-		dados.Installationdate, dados.Activationdate, dados.Supplier, dados.Operator,
-		dados.Plan, dados.Apn, dados.Status, dados.Stock, dados.Substituted, dados.Nfsimcon,
-		dados.Deliverydate, dados.Obs, dados.Id,
-	)
-	if err != nil {
-		tx.Rollback()
-		http.Error(w, "Erro ao atualizar o registro no banco de dados", http.StatusInternalServerError)
-		return
-	}
+// 	_, err = stmt.Exec(
+// 		dados.Client, dados.Iccid, dados.Simcon, dados.Msisdn, dados.Ip, dados.Slot,
+// 		dados.Installationdate, dados.Activationdate, dados.Supplier, dados.Operator,
+// 		dados.Plan, dados.Apn, dados.Status, dados.Stock, dados.Substituted, dados.Nfsimcon,
+// 		dados.Deliverydate, dados.Obs, dados.Id,
+// 	)
+// 	if err != nil {
+// 		tx.Rollback()
+// 		http.Error(w, "Erro ao atualizar o registro no banco de dados", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	logsRows, err := tx.Prepare(db.UpdateLogQuery())
-	if err != nil {
-		tx.Rollback()
-		http.Error(w, "Erro ao preparar a instrução de registro de log", http.StatusInternalServerError)
-		return
-	}
-	defer logsRows.Close()
+// 	logsRows, err := tx.Prepare(db.UpdateLogQuery())
+// 	if err != nil {
+// 		tx.Rollback()
+// 		http.Error(w, "Erro ao preparar a instrução de registro de log", http.StatusInternalServerError)
+// 		return
+// 	}
+// 	defer logsRows.Close()
 
-	_, err = logsRows.Exec(
-		dados.Id,
-		"Simcard Atualizado",
-		dados.UpdateDetails,
-	)
-	if err != nil {
-		tx.Rollback()
-		http.Error(w, "Erro ao registrar log", http.StatusInternalServerError)
-		return
-	}
+// 	_, err = logsRows.Exec(
+// 		dados.Id,
+// 		"Simcard Atualizado",
+// 		dados.UpdateDetails,
+// 	)
+// 	if err != nil {
+// 		tx.Rollback()
+// 		http.Error(w, "Erro ao registrar log", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	err = tx.Commit()
-	if err != nil {
-		tx.Rollback()
-		http.Error(w, "Erro ao confirmar a transação", http.StatusInternalServerError)
-		return
-	}
+// 	err = tx.Commit()
+// 	if err != nil {
+// 		tx.Rollback()
+// 		http.Error(w, "Erro ao confirmar a transação", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	fmt.Fprintf(w, "Dados atualizados com sucesso!")
-}
+// 	fmt.Fprintf(w, "Dados atualizados com sucesso!")
+// }
