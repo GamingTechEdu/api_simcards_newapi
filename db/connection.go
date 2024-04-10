@@ -11,7 +11,7 @@ var MysqlDB *sql.DB
 
 func ConnectMysql() {
 	var err error
-	db, err := sql.Open("mysql", "kdl:sim$srv%8484@tcp(187.122.102.36:50026)/SIMCARDS")
+	db, err := sql.Open("mysql", "kdl:sim$srv%8484@tcp(187.122.102.36:50026)/KDL_MANUTENCAO")
 	db.SetMaxIdleConns(100)
 
 	if err != nil {

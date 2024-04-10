@@ -1,5 +1,7 @@
 package db
 
+import "strconv"
+
 func RecordLogQuery() string {
 	return "INSERT INTO simcard_logs (simcard_id, action, timestamp, details) VALUES (?, ?, NOW(), ?);"
 }
@@ -40,6 +42,14 @@ func GetAllLogsQuery() string {
 
 func GetListIccidsQuery() string {
 	return "select iccid from simcards"
+}
+
+// func GetListSimucsQuery() string {
+// 	return "select * from simucs where numberDoc = 142 && nserlum = 2220003551"
+// }
+
+func GetListSimucsQuery(numberDoc, nserlum int) string {
+	return "SELECT * FROM simucs WHERE numberDoc = " + strconv.Itoa(numberDoc) + " AND nserlum = " + strconv.Itoa(nserlum)
 }
 
 func PostUserQuery() string {
