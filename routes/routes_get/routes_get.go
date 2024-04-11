@@ -11,5 +11,6 @@ func SetGetRoutes(router *mux.Router) {
 	// router.HandleFunc("/listIccids", get.GetListIccids).Methods("GET")
 	// router.HandleFunc("/stock", get.GetAllStock).Methods("GET")
 	// router.HandleFunc("/logs", get.GetAllLogs).Methods("GET")
-	router.HandleFunc("/simucs", get.GetListSimucs).Methods("POST")
+	router.HandleFunc("/simucs", get.GetSimucs).Methods("POST")
+	router.HandleFunc("/listSimucs", get.GetListSimucs).Methods("POST")
 }

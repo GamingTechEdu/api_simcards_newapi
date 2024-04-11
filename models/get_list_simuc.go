@@ -10,8 +10,8 @@ type GetListSimuc struct {
 	Violation      *string `json:"violation"`
 	Obs            *string `json:"obs"`
 	EvaluatorDate  *string `json:"evaluatorDate"`
-	DefectRelated  *string `json:"defectRelated"`
-	ApparentDefect *string `json:"apparentDefect"`
+	DefectRelated  *string `json:"defectrelated"`
+	ApparentDefect *string `json:"apparentdefect"`
 	Defect         *string `json:"defect"`
 	Evaluator      *string `json:"evaluator"`
 	Components     *string `json:"components"`
