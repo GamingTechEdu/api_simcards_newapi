@@ -13,6 +13,7 @@ import (
 )
 
 func RecordSimcard(w http.ResponseWriter, r *http.Request) {
+	db.ConnectMysqlSimcards()
 	if r.Method != "POST" {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
@@ -128,6 +129,7 @@ func RecordSimcard(w http.ResponseWriter, r *http.Request) {
 }
 
 func RecordStock(w http.ResponseWriter, r *http.Request) {
+	db.ConnectMysqlSimcards()
 	if r.Method != "POST" {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
@@ -178,6 +180,7 @@ func RecordStock(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostUser(w http.ResponseWriter, r *http.Request) {
+	db.ConnectMysqlSimcards()
 	if r.Method != "POST" {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
@@ -205,6 +208,7 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateSimcard(w http.ResponseWriter, r *http.Request) {
+	db.ConnectMysqlSimcards()
 	if r.Method != "POST" {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return

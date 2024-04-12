@@ -43,3 +43,29 @@ func ScanSimcardRow(row *sql.Rows) (models.Simcards, error) {
 
 	return simcard, err
 }
+
+func ScanListSimucRow(row *sql.Rows) (models.GetListSimuc, error) {
+	var simcard models.GetListSimuc
+	err := row.Scan(
+		&simcard.Id,
+		&simcard.Nserlum,
+		&simcard.Doc,
+		&simcard.NumberDoc,
+		&simcard.Datedoc,
+		&simcard.User,
+		&simcard.Violation,
+		&simcard.Obs,
+		&simcard.EvaluatorDate,
+		&simcard.DefectRelated,
+		&simcard.ApparentDefect,
+		&simcard.Defect,
+		&simcard.Evaluator,
+		&simcard.Components,
+		&simcard.Value,
+		&simcard.Garantee,
+		&simcard.Nivel,
+		&simcard.Exist,
+	)
+
+	return simcard, err
+}
