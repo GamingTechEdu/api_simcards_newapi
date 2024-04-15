@@ -15,3 +15,6 @@ NOVAS FUNIONALIDADES
 
 Fazer validação de usuário e retornar Token
 
+
+Teste de update no servidor
+

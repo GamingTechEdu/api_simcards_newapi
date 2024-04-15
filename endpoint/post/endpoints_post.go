@@ -241,10 +241,10 @@ func UpdateSimcard(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	// Preparando a instrução UPDATE
-	stmt, err := tx.Prepare(`UPDATE simcards SET 
-        Client=?, Iccid=?, Simcon=?, Msisdn=?, Ip=?, Slot=?, Installationdate=?, 
-        Activationdate=?, Supplier=?, Operator=?, Plan=?, Apn=?, Status=?, Stock=?, 
-        Substituted=?, NfSimcon=?, Deliverydate=?, Obs=? WHERE id=?`)
+	stmt, err := tx.Prepare(`UPDATE simcards SET
+	        Client=?, Iccid=?, Simcon=?, Msisdn=?, Ip=?, Slot=?, Installationdate=?,
+	        Activationdate=?, Supplier=?, Operator=?, Plan=?, Apn=?, Status=?, Stock=?,
+	        Substituted=?, NfSimcon=?, Deliverydate=?, Obs=? WHERE id=?`)
 	if err != nil {
 		tx.Rollback()
 		http.Error(w, "Erro ao preparar a instrução SQL", http.StatusInternalServerError)
